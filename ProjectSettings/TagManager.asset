@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlaneGeneratedByARCore
+  - UI
   layers:
   - Default
   - TransparentFX

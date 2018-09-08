@@ -21,16 +21,24 @@ public class UIControl : MonoBehaviour {
 
         m_show = !m_show;
 
-        m_planes = GameObject.FindGameObjectsWithTag("PlaneGeneratedByARCore");
-
-        Debug.Log("toggled " + m_planes.Length);
+        Debug.Log("toggled plane " + m_planes.Length);
 
         foreach (GameObject plane in m_planes) {
+            if (plane != null) {
 
-            Debug.Log("toggled plane");
+                plane.GetComponent<MeshRenderer>().enabled = m_show;
 
-            plane.GetComponent<MeshRenderer>().enabled = m_show;
- 
+            }
         }
     }
+
+    public void updatePlaneMeshVisibility(MeshRenderer newRenderer) {
+
+        m_planes = GameObject.FindGameObjectsWithTag("PlaneGeneratedByARCore");
+
+        newRenderer.enabled = m_show;
+
+        Debug.Log("plane update visibility");
+    }
+
 }

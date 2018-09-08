@@ -65,6 +65,9 @@ namespace GoogleARCore.Examples.Common
 
         private MeshRenderer m_MeshRenderer;
 
+        //my stuff - UIControl
+        private GameObject UIController;
+
         /// <summary>
         /// The Unity Awake() method.
         /// </summary>
@@ -72,6 +75,8 @@ namespace GoogleARCore.Examples.Common
         {
             m_Mesh = GetComponent<MeshFilter>().mesh;
             m_MeshRenderer = GetComponent<UnityEngine.MeshRenderer>();
+
+            UIController = GameObject.FindGameObjectWithTag("UI");
         }
 
         /// <summary>
@@ -108,6 +113,11 @@ namespace GoogleARCore.Examples.Common
             m_DetectedPlane = plane;
             m_MeshRenderer.material.SetColor("_GridColor", k_PlaneColors[s_PlaneCount++ % k_PlaneColors.Length]);
             m_MeshRenderer.material.SetFloat("_UvRotation", Random.Range(0.0f, 360.0f));
+
+            Debug.Log("plane detected and initialized");
+
+            UIController.GetComponent<UIControl>().updatePlaneMeshVisibility(m_MeshRenderer);
+
 
             Update();
         }
