@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ public class UIControl : MonoBehaviour {
 
     private bool m_show = true;
     private GameObject[] m_planes;
+
+    public GameObject m_MeshButton;
+    public GameObject m_CameraButton;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +43,27 @@ public class UIControl : MonoBehaviour {
         newRenderer.enabled = m_show;
 
         Debug.Log("plane update visibility");
+    }
+
+    public void CaptureScreenshot() {
+        m_MeshButton.SetActive(false);
+        m_CameraButton.SetActive(false);
+        StartCoroutine(CaptureScreenshotCoroutine());
+    }
+
+    private IEnumerator CaptureScreenshotCoroutine() {
+
+        Debug.Log("Screenshot called");
+
+        string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+        string myFileName = "ARPOOP" + timeStamp + ".png";
+        string pathToSave = myFileName;
+
+        ScreenCapture.CaptureScreenshot(pathToSave);
+        yield return new WaitForEndOfFrame();
+        m_MeshButton.SetActive(true);
+        m_CameraButton.SetActive(true);
+
     }
 
 }
