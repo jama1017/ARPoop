@@ -48,22 +48,32 @@ public class UIControl : MonoBehaviour {
     public void CaptureScreenshot() {
         m_MeshButton.SetActive(false);
         m_CameraButton.SetActive(false);
-        StartCoroutine(CaptureScreenshotCoroutine());
+        string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+        string myFileName = "ARPoop" + timeStamp + ".png";
+
+        StartCoroutine("CaptureScreenshotCoroutine", myFileName);
     }
 
-    private IEnumerator CaptureScreenshotCoroutine() {
-
-        Debug.Log("Screenshot called");
-
-        string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
-        string myFileName = "ARPOOP" + timeStamp + ".png";
-        string pathToSave = myFileName;
-
-        ScreenCapture.CaptureScreenshot(pathToSave);
+    private IEnumerator CaptureScreenshotCoroutine(string filename) {
         yield return new WaitForEndOfFrame();
+        ScreenShoter.CaptureScreenShot(filename);
         m_MeshButton.SetActive(true);
         m_CameraButton.SetActive(true);
-
     }
+
+    //private IEnumerator CaptureScreenshotCoroutine() {
+
+    //    Debug.Log("Screenshot called");
+
+    //    string timeStamp = System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+    //    string myFileName = "ARPOOP" + timeStamp + ".png";
+    //    string pathToSave = myFileName;
+
+    //    ScreenCapture.CaptureScreenshot(pathToSave);
+    //    yield return new WaitForEndOfFrame();
+    //    m_MeshButton.SetActive(true);
+    //    m_CameraButton.SetActive(true);
+
+    //}
 
 }

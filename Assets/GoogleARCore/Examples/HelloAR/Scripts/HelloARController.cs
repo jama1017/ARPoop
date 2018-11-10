@@ -76,6 +76,20 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         private bool m_IsQuitting = false;
 
+        ///<summary by JMa>
+        ///AudioSource variable
+        private AudioSource poopSound;
+        public AudioClip poop1;
+        public AudioClip poop2;
+        public AudioClip poop3;
+
+        /// <summary by JMa>
+        /// When start, get AudioSource component to play poop sound
+        public void Start() 
+        {
+            poopSound = GetComponent<AudioSource>();
+        }
+
         /// <summary>
         /// The Unity Update() method.
         /// </summary>
@@ -131,6 +145,9 @@ namespace GoogleARCore.Examples.HelloAR
                     {
                         prefab = AndyPlanePrefab;
                     }
+
+                    //<added by JMa> play poop sound
+                    playRandomPoopSound();
 
                     // Instantiate Andy model at the hit pose.
                     var andyObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
@@ -217,6 +234,24 @@ namespace GoogleARCore.Examples.HelloAR
                     toastObject.Call("show");
                 }));
             }
+        }
+
+        /// <summary>
+        /// Play random poop sound clip
+        private void playRandomPoopSound() {
+            int rand = Random.Range(1, 4);
+            switch (rand) {
+                case 1:
+                    poopSound.PlayOneShot(poop1, 1.0F);
+                    break;
+                case 2:
+                    poopSound.PlayOneShot(poop2, 1.0F);
+                    break;
+                case 3:
+                    poopSound.PlayOneShot(poop3, 1.0F);
+                    break;
+            }
+            
         }
     }
 }
