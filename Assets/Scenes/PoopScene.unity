@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 277686527}
   - component: {fileID: 277686529}
   m_Layer: 0
-  m_Name: Example Controller
+  m_Name: PoopController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,9 +265,9 @@ MonoBehaviour:
   FirstPersonCamera: {fileID: 973616205}
   DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
     type: 2}
-  AndyPlanePrefab: {fileID: 1354832300049696, guid: a8e7b127d808e9c488d4dbd2779882a3,
+  AndyPlanePrefab: {fileID: 1264494110819588, guid: 09c0d67e09e5ec94c8449edd1b408f8b,
     type: 2}
-  AndyPointPrefab: {fileID: 1354832300049696, guid: a8e7b127d808e9c488d4dbd2779882a3,
+  AndyPointPrefab: {fileID: 1264494110819588, guid: 09c0d67e09e5ec94c8449edd1b408f8b,
     type: 2}
   SearchingForPlaneUI: {fileID: 1877442573}
   poop1: {fileID: 8300000, guid: 03d7e5981a1db7b48822b1f315042f43, type: 3}
