@@ -55,8 +55,6 @@ GameObject:
   - component: {fileID: 4662065627689530}
   - component: {fileID: 33616957977336294}
   - component: {fileID: 23722759169480440}
-  - component: {fileID: 65773481796062840}
-  - component: {fileID: 54422482634778600}
   m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
@@ -138,6 +136,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4911494137919358}
+  - component: {fileID: 54136661474231248}
+  - component: {fileID: 65219302263775152}
   m_Layer: 0
   m_Name: Toilet.1
   m_TagString: Untagged
@@ -508,12 +508,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1375641109255744}
   m_Mesh: {fileID: 4300006, guid: 62d71f2906a1073479fd0b63261a85b9, type: 3}
---- !u!54 &54422482634778600
+--- !u!54 &54136661474231248
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1245715906861250}
+  m_GameObject: {fileID: 1798202277867614}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -523,15 +523,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65773481796062840
+--- !u!65 &65219302263775152
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1245715906861250}
+  m_GameObject: {fileID: 1798202277867614}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.023591228, y: 0.036667015, z: 0.021745395}
-  m_Center: {x: 4.6566123e-10, y: 0.013237038, z: -0.011382135}
+  m_Size: {x: 2, y: 2.2, z: 2}
+  m_Center: {x: 0, y: 1.1, z: 0}

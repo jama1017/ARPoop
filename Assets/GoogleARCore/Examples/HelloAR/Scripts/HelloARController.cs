@@ -24,6 +24,8 @@ namespace GoogleARCore.Examples.HelloAR
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+    using UnityEngine.EventSystems;
+    using UnityEngine.UI;
 
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
@@ -54,6 +56,11 @@ namespace GoogleARCore.Examples.HelloAR
         /// A model to place when a raycast from a user touch hits a feature point.
         /// </summary>
         public GameObject AndyPointPrefab;
+
+        /// <summary>
+        /// Poopl model to be placed when hit a toilet
+        /// </summary>
+        public GameObject PoopMomPrefab;
 
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
@@ -118,50 +125,70 @@ namespace GoogleARCore.Examples.HelloAR
                 return;
             }
 
-            // Raycast against the location the player touched to search for planes.
-            TrackableHit hit;
-            TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-                TrackableHitFlags.FeaturePointWithSurfaceNormal;
+            //Unity raycast to place poop
+            if (EventSystem.current == null || !(EventSystem.current.IsPointerOverGameObject() || EventSystem.current.currentSelectedGameObject != null)) {
+                Ray ray = FirstPersonCamera.ScreenPointToRay(touch.position);
+                RaycastHit rayHit;
+                if (Physics.Raycast(ray, out rayHit, 9999f)) {
+                    if(rayHit.transform.gameObject.name != "DetectedPlaneVisualizer(Clone)") {
+                        OnUnityPlaneHit(rayHit);
+                    } else {
+                        Debug.Log(rayHit.transform.gameObject.name);
+                        // Raycast against the location the player touched to search for planes.
+                        TrackableHit hit;
+                        TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                            TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
-            if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
-            {
-                // Use hit pose and camera pose to check if hittest is from the
-                // back of the plane, if it is, no need to create the anchor.
-                if ((hit.Trackable is DetectedPlane) &&
-                    Vector3.Dot(FirstPersonCamera.transform.position - hit.Pose.position,
-                        hit.Pose.rotation * Vector3.up) < 0)
-                {
-                    Debug.Log("Hit at back of the current DetectedPlane");
-                }
-                else
-                {
-                    // Choose the Andy model for the Trackable that got hit.
-                    GameObject prefab;
-                    if (hit.Trackable is FeaturePoint)
-                    {
-                        prefab = AndyPointPrefab;
+                        if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)) {
+                            // Use hit pose and camera pose to check if hittest is from the
+                            // back of the plane, if it is, no need to create the anchor.
+                            if ((hit.Trackable is DetectedPlane) &&
+                                Vector3.Dot(FirstPersonCamera.transform.position - hit.Pose.position,
+                                    hit.Pose.rotation * Vector3.up) < 0) {
+                                Debug.Log("Hit at back of the current DetectedPlane");
+                            }
+                            else {
+                                // Choose the Andy model for the Trackable that got hit.
+                                GameObject prefab;
+                                if (hit.Trackable is FeaturePoint) {
+                                    prefab = AndyPointPrefab;
+                                }
+                                else {
+                                    prefab = AndyPlanePrefab;
+                                }
+
+                                // Instantiate Andy model at the hit pose.
+                                var andyObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
+
+                                // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                                andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+
+                                // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
+                                // world evolves.
+                                var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+
+                                // Make Andy model a child of the anchor.
+                                andyObject.transform.parent = anchor.transform;
+                            }
+                        }
                     }
-                    else
-                    {
-                        prefab = AndyPlanePrefab;
-                    }
-
-                    //<added by JMa> play poop sound
-                    playRandomPoopSound();
-
-                    // Instantiate Andy model at the hit pose.
-                    var andyObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
-
-                    // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-                    andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-
-                    // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
-                    // world evolves.
-                    var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-
-                    // Make Andy model a child of the anchor.
-                    andyObject.transform.parent = anchor.transform;
+                    
                 }
+            }
+
+        }
+
+        private void OnUnityPlaneHit(RaycastHit hit) {
+            GameObject hitObject = hit.transform.gameObject;
+            Debug.Log(hitObject.name);
+            if (hitObject.name == "Toilet.1") {
+                GameObject poopObject = Instantiate(PoopMomPrefab);
+
+                poopObject.transform.rotation = hitObject.transform.rotation;
+                poopObject.transform.position = hitObject.transform.position + Vector3.up * 0.4f;
+
+                //<added by JMa> play poop sound
+                playRandomPoopSound();
             }
         }
 

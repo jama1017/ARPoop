@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 277686528}
   - component: {fileID: 277686527}
   - component: {fileID: 277686529}
+  - component: {fileID: 277686530}
   m_Layer: 0
   m_Name: PoopController
   m_TagString: Untagged
@@ -268,6 +269,8 @@ MonoBehaviour:
   AndyPlanePrefab: {fileID: 1264494110819588, guid: 09c0d67e09e5ec94c8449edd1b408f8b,
     type: 2}
   AndyPointPrefab: {fileID: 1264494110819588, guid: 09c0d67e09e5ec94c8449edd1b408f8b,
+    type: 2}
+  PoopMomPrefab: {fileID: 1354832300049696, guid: a8e7b127d808e9c488d4dbd2779882a3,
     type: 2}
   SearchingForPlaneUI: {fileID: 1877442573}
   poop1: {fileID: 8300000, guid: 03d7e5981a1db7b48822b1f315042f43, type: 3}
@@ -381,6 +384,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &277686530
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 277686526}
+  m_Enabled: 1
 --- !u!1 &347503747
 GameObject:
   m_ObjectHideFlags: 0
